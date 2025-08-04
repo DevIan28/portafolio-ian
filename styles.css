@@ -1,4 +1,4 @@
-/* Selector por etiqueta */
+
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -6,7 +6,6 @@ body {
   color: #333;
 }
 
-/* Header con Flexbox */
 #main-header {
   display: flex;
   justify-content: space-between;
@@ -31,7 +30,6 @@ body {
   font-size: 1.2em;
 }
 
-/* Flex para las tarjetas */
 .card-container {
   display: flex;
   justify-content: space-around;
@@ -45,7 +43,7 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 30%;
   margin: 20px;
-  padding: 20px; /* px */
+  padding: 20px;
   transition: transform 0.2s ease;
 }
 
@@ -54,16 +52,14 @@ body {
 }
 
 .card-em {
-  padding: 2em; /* em */
-  margin: 1em;
+  margin: auto;
 }
 
 .card-percent {
-  padding: 5%; /* % */
+  padding: 5%; 
   margin: 2%;
 }
 
-/* Footer con Flexbox */
 .footer {
   display: flex;
   justify-content: space-around;
