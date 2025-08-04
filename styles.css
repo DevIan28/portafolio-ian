@@ -19,12 +19,15 @@ body {
   font-weight: 600;
 }
 
-.card-em {
-  padding: 2em;
+.tarjeta-personal {
+  border-radius: 12px;
+  padding: 1rem;
+  transition: transform 0.3s;
+  background-color: #ffffff;
 }
 
-.card-percent {
-  padding: 5%;
+.tarjeta-personal:hover {
+  transform: scale(1.02);
 }
 
 .footer {
