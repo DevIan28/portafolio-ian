@@ -10,7 +10,7 @@ export default function Hero() {
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        src="public/avatar.jpg"
+        src="public/src/assets/avatar.jpg"
         alt={profile.name}
         className="w-40 h-40 rounded-2xl object-cover border border-neutral-200 dark:border-neutral-800"
       />
