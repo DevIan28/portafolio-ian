@@ -17,7 +17,7 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* Últimos 3 proyectos desde GitHub – cards anchas (2 columnas) */}
+      {/* Últimos 3 proyectos desde GitHub – 3 columnas mismas que en /projects */}
       <Section>
         <Reveal>
           <div>
@@ -35,8 +35,10 @@ export default function Home() {
             username="DevIan28"
             limit={3}
             hideControls
-            gridClassName="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch"
-            cardVariant="wide"
+            /* 3 columnas desde md; misma grilla que usamos en Projects */
+            gridClassName="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch"
+            /* usamos el variant normal para que tengan el mismo alto que en /projects */
+            cardVariant="normal"
           />
         </div>
       </Section>
