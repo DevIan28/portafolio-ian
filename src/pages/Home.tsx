@@ -46,7 +46,7 @@ export default function Home() {
         {/* Botones a demos publicadas */}
         <div className="mt-6 flex flex-wrap gap-3">
           <a
-            href="https://devian28.github.io/nintendo-games/"
+            href="https://devian28.github.io/Nintendo_Games_Catalog/"
             target="_blank"
             rel="noreferrer"
           >
