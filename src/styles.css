@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ——— Base que ya tenías ——— */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply bg-neutral-50 text-neutral-800 dark:bg-neutral-950 dark:text-neutral-200 antialiased; }
+  a { @apply text-brand-700 hover:text-brand-800 dark:text-brand-400 dark:hover:text-brand-300; }
+  ::selection { @apply bg-brand-200 dark:bg-brand-700 text-neutral-900 dark:text-white; }
+}
+
+/* Prosa */
+.prose h1 { @apply text-4xl font-bold tracking-tight; }
+.prose h2 { @apply text-2xl font-semibold mt-8; }
+.prose p  { @apply leading-7 text-neutral-700 dark:text-neutral-300; }
+
+/* Componentes (los que ya usas) */
+@layer components {
+  .card       { @apply rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white/85 dark:bg-neutral-900/85 backdrop-blur shadow-sm; }
+  .card-ghost { @apply rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-neutral-50/80 dark:bg-neutral-950/60 backdrop-blur; }
+  .input      { @apply w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 p-3 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-brand-500/40; }
+  .label      { @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wide text-neutral-600 dark:text-neutral-400; }
+  .chip       { @apply px-3.5 py-1.5 rounded-xl text-xs border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800; }
+}
+
+/* ——— Utilidades NUEVAS (no rompen diseño) ——— */
+@layer utilities {
+  /* Oculta scroll bar para menús horizontales en móvil */
+  .hide-scrollbar::-webkit-scrollbar { display: none; }
+  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Imágenes siempre fluidas (no estiran contenedor) */
+  .img-fluid { max-width: 100%; height: auto; }
+
+  /* Grids comunes: 1→2→3/4 columnas según ancho */
+  .grid-autofit { grid-template-columns: repeat(1, minmax(0,1fr)); }
+  @screen sm { .grid-autofit { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @screen lg { .grid-autofit { grid-template-columns: repeat(3, minmax(0,1fr)); } }
+  @screen xl { .grid-autofit { grid-template-columns: repeat(4, minmax(0,1fr)); } }
+}
