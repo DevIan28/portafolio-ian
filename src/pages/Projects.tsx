@@ -14,6 +14,7 @@ export default function Projects() {
         </p>
       </Reveal>
 
+      {/* Muestra todos los repos. La búsqueda queda activa; no hay toggles extras */}
       <GithubProjects username="DevIan28" />
     </Section>
   );

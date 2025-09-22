@@ -28,8 +28,6 @@ export default function GithubProjects({
   const [data, setData] = useState<GHRepo[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [q, setQ] = useState("");
-  const [hideForks, setHideForks] = useState(true);
-  const [onlyWithDemo, setOnlyWithDemo] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -57,8 +55,7 @@ export default function GithubProjects({
   const filtered = useMemo(() => {
     if (!data) return [];
     const base = data
-      .filter((r) => (hideForks ? !r.fork : true))
-      .filter((r) => (onlyWithDemo ? !!r.homepage : true))
+      // mostramos todo, sin filtros de forks/withDemo
       .filter((r) =>
         q.trim()
           ? (r.name + " " + (r.description ?? "") + " " + (r.language ?? ""))
@@ -68,7 +65,7 @@ export default function GithubProjects({
       )
       .sort((a, b) => +new Date(b.pushed_at) - +new Date(a.pushed_at));
     return typeof limit === "number" ? base.slice(0, limit) : base;
-  }, [data, hideForks, onlyWithDemo, q, limit]);
+  }, [data, q, limit]);
 
   if (loading) {
     return (
@@ -96,27 +93,10 @@ export default function GithubProjects({
             placeholder="Buscar por nombre/desc/tecnología…"
             className="w-full sm:w-64 rounded-lg border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-950 px-3 py-2 text-sm"
           />
-          <label className="inline-flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              className="accent-black dark:accent-white"
-              checked={hideForks}
-              onChange={(e) => setHideForks(e.target.checked)}
-            />
-            Ocultar forks
-          </label>
-          <label className="inline-flex items-center gap-2 text-sm">
-            <input
-              type="checkbox"
-              className="accent-black dark:accent-white"
-              checked={onlyWithDemo}
-              onChange={(e) => setOnlyWithDemo(e.target.checked)}
-            />
-            Solo con demo
-          </label>
         </div>
       )}
 
+      {/* Grid uniforme; las cards se estiran a la misma altura */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
         {filtered.map((r, i) => {
           const p = {
