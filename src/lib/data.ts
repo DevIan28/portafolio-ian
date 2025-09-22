@@ -9,7 +9,7 @@ export const profile = {
   socials: {
     github: "https://github.com/DevIan28",
     linkedin: "https://www.linkedin.com/in/ian-marco-arango-velez/",
-    // Dejo X/Twitter por compatibilidad con componentes que lo referencian
+    // Se mantiene por compatibilidad si algún componente lo referencia
     twitter: "https://x.com",
   },
 };
@@ -24,52 +24,9 @@ export type Project = {
   images?: string[];
 };
 
-export const projects: Project[] = [
-  {
-    id: "videospotify",
-    title: "VideoSpotify",
-    description: "Clon tipo Spotify enfocado en video. HTML/SASS/Bootstrap/JS.",
-    tags: ["frontend", "bootstrap", "javascript"],
-    repo: "https://github.com/DevIan28/videospotify",
-    demo: "https://devian28.github.io/videospotify",
-    images: [
-      "https://picsum.photos/seed/videospotify-1/1200/800",
-      "https://picsum.photos/seed/videospotify-2/1200/800",
-      "https://picsum.photos/seed/videospotify-3/1200/800",
-    ],
-  },
-  {
-    id: "duosigns",
-    title: "DuoSigns",
-    description: "App tipo Duolingo para lengua de señas con reconocimiento de gestos.",
-    tags: ["mobile", "ai", "cv"],
-    repo: "https://github.com/DevIan28/duosigns",
-    images: [
-      "https://picsum.photos/seed/duosigns-1/1200/800",
-      "https://picsum.photos/seed/duosigns-2/1200/800",
-      "https://picsum.photos/seed/duosigns-3/1200/800",
-    ],
-  },
-  {
-    id: "pricat-api",
-    title: "Pricat API",
-    description: "API REST .NET Clean Architecture + MySQL para catálogo de precios.",
-    tags: ["backend", ".net", "mysql"],
-    repo: "https://github.com/DevIan28/pricat",
-    images: [
-      "https://picsum.photos/seed/pricat-1/1200/800",
-      "https://picsum.photos/seed/pricat-2/1200/800",
-      "https://picsum.photos/seed/pricat-3/1200/800",
-    ],
-  },
-];
+//  Uso solo los repos de GitHub (GithubProjects). Dejamos vacío por compatibilidad.
+export const projects: Project[] = [];
 
-/**
- * EXPERIENCIA (timeline)
- * - Técnico SENA (2021–2022)
- * - Prácticas 2022 en Restrepo y Londoño
- * - Ingeniería de Sistemas USB Cali (2022–Presente)
- */
 export const experience = [
   {
     role: "Estudiante de Ingeniería de Sistemas",
@@ -160,27 +117,5 @@ export const testimonials = [
   },
 ];
 
-// === Certificaciones (enlaces externos opcionales) ===
-export const certifications = [
-  {
-    title: "AWS Certified Cloud Practitioner",
-    issuer: "Amazon Web Services",
-    year: "2024",
-    badgeUrl: "https://img.shields.io/badge/AWS%20Cloud%20Practitioner-232F3E?logo=amazonaws&logoColor=white",
-    verifyUrl: "https://aws.amazon.com/certification/",
-  },
-  {
-    title: "Scrum Foundation",
-    issuer: "Scrum.org",
-    year: "2023",
-    badgeUrl: "https://img.shields.io/badge/Scrum-111111?logo=scrumalliance&logoColor=white",
-    verifyUrl: "https://www.scrum.org/",
-  },
-  {
-    title: "Git & GitHub",
-    issuer: "Coursera",
-    year: "2022",
-    badgeUrl: "https://img.shields.io/badge/GitHub-181717?logo=github&logoColor=white",
-    verifyUrl: "https://www.coursera.org/",
-  },
-];
+// 👉 Sin certificaciones externas por ahora (los PDFs locales se detectan aparte).
+export const certifications: never[] = [];
