@@ -1,13 +1,16 @@
+// Perfil (con tu info)
 export const profile = {
   name: "Ian Marco Arango Velez",
   headline: "Ingeniero de Sistemas | Frontend/Backend | Cloud",
   location: "Cali, Colombia",
   email: "ian.m28615@gmail.com",
   resumeUrl: "#",
-  whatsapp: "https://wa.me/573215767455", 
+  whatsapp: "https://wa.me/573215767455",
   socials: {
     github: "https://github.com/DevIan28",
     linkedin: "https://www.linkedin.com/in/ian-marco-arango-velez/",
+    // Dejo X/Twitter para que el build no truene; si no lo usas, puedo quitar el comando del Command Palette.
+    twitter: "https://x.com",
   },
 };
 
@@ -28,7 +31,7 @@ export const projects: Project[] = [
     description: "Clon tipo Spotify enfocado en video. HTML/SASS/Bootstrap/JS.",
     tags: ["frontend", "bootstrap", "javascript"],
     repo: "https://github.com/DevIan28/videospotify",
-    demo: "https://tuusuario.github.io/videospotify",
+    demo: "https://devian28.github.io/videospotify", // ← ajusté a tu usuario
     images: [
       "https://picsum.photos/seed/videospotify-1/1200/800",
       "https://picsum.photos/seed/videospotify-2/1200/800",

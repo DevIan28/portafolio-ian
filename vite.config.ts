@@ -6,7 +6,7 @@ const repo = 'portafolio-ian';
 
 export default defineConfig({
   plugins: [react()],
-  base: process.env.GITHUB_ACTIONS ? `/${repo}/` : '/',
+  base: `/${repo}/`,
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
   },
