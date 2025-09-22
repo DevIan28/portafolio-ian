@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
+import screens from "@/lib/screens";
 
 type GHRepo = {
   name: string;
@@ -12,7 +13,7 @@ type GHRepo = {
   pushed_at: string;
 };
 
-function cover(username: string, repo: string) {
+function ogCover(username: string, repo: string) {
   return `https://opengraph.githubassets.com/1/${username}/${repo}`;
 }
 
@@ -105,17 +106,23 @@ export default function GithubProjects({
 
       <div className={gridCls}>
         {filtered.map((r, i) => {
+          const repoName = r.name;
+          const imgs = screens[repoName] && screens[repoName].length > 0
+            ? screens[repoName]
+            : [ogCover(username, repoName)]; // fallback
+
           const p = {
-            id: r.name,
-            title: r.name,
+            id: repoName,
+            title: repoName,
             description: r.description ?? "Proyecto en GitHub",
             tags: [r.language ?? "GitHub"].filter(Boolean),
             repo: r.html_url,
             demo: r.homepage ?? undefined,
-            images: [cover(username, r.name)],
+            images: imgs, // 👈 se envían al card y al modal
           };
+
           return (
-            <Reveal key={r.name} delay={i * 0.03}>
+            <Reveal key={repoName} delay={i * 0.03}>
               <ProjectCard p={p as any} variant={cardVariant} />
             </Reveal>
           );

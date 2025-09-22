@@ -13,8 +13,29 @@ type Props = {
   p: Project;
 };
 
+// Detecta si el repo tiene sitio en GitHub Pages y construye la URL
+function pagesUrlIfAny(repoUrl?: string) {
+  if (!repoUrl) return null;
+  try {
+    const u = new URL(repoUrl);
+    const owner = u.pathname.split("/").filter(Boolean)[0]?.toLowerCase();
+    const repo = u.pathname.split("/").filter(Boolean)[1];
+    // Repos con Pages publicados (ajusta aquí si agregas más)
+    const allow = new Set(["delicias-web", "Nintendo_Games_Catalog", "portafolio-ian"].map(s => s.toLowerCase()));
+    if (owner === "devian28" && repo && allow.has(repo.toLowerCase())) {
+      return `https://devian28.github.io/${repo}/`;
+    }
+  } catch {
+    /* no-op */
+  }
+  return null;
+}
+
 export default function ProjectModal({ open, onClose, p }: Props) {
   useLockBodyScroll(open);
+
+  const pagesUrl = pagesUrlIfAny(p.repo);
+
   return createPortal(
     <AnimatePresence>
       {open && (
@@ -66,18 +87,26 @@ export default function ProjectModal({ open, onClose, p }: Props) {
                   ))}
                 </div>
 
+                {/* Acciones: Demo, Pages (si aplica) y Repo */}
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {p.repo && (
-                    <a href={p.repo} target="_blank" rel="noreferrer">
-                      <Button variant="ghost" className="gap-2">
-                        <Github size={16} /> Repo
-                      </Button>
-                    </a>
-                  )}
                   {p.demo && (
                     <a href={p.demo} target="_blank" rel="noreferrer">
                       <Button className="gap-2">
                         <ExternalLink size={16} /> Demo
+                      </Button>
+                    </a>
+                  )}
+                  {pagesUrl && (
+                    <a href={pagesUrl} target="_blank" rel="noreferrer">
+                      <Button variant="secondary" className="gap-2">
+                        <ExternalLink size={16} /> Pages
+                      </Button>
+                    </a>
+                  )}
+                  {p.repo && (
+                    <a href={p.repo} target="_blank" rel="noreferrer">
+                      <Button variant="ghost" className="gap-2">
+                        <Github size={16} /> Repo
                       </Button>
                     </a>
                   )}
