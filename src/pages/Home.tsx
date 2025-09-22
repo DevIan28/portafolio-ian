@@ -17,7 +17,7 @@ export default function Home() {
         </Reveal>
       </Section>
 
-      {/* Últimos 3 proyectos desde GitHub (sin botones extra) */}
+      {/* Últimos 3 proyectos desde GitHub – cards anchas (2 columnas) */}
       <Section>
         <Reveal>
           <div>
@@ -31,8 +31,13 @@ export default function Home() {
         </Reveal>
 
         <div className="mt-5">
-          {/* Muestra solo 3 recientes; los botones viven dentro de cada card */}
-          <GithubProjects username="DevIan28" limit={3} hideControls />
+          <GithubProjects
+            username="DevIan28"
+            limit={3}
+            hideControls
+            gridClassName="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch"
+            cardVariant="wide"
+          />
         </div>
       </Section>
 

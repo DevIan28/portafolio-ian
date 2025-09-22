@@ -20,10 +20,14 @@ export default function GithubProjects({
   username = "DevIan28",
   limit,
   hideControls = false,
+  gridClassName,
+  cardVariant = "normal",
 }: {
   username?: string;
   limit?: number;
   hideControls?: boolean;
+  gridClassName?: string;
+  cardVariant?: "normal" | "wide";
 }) {
   const [data, setData] = useState<GHRepo[] | null>(null);
   const [loading, setLoading] = useState(true);
@@ -55,7 +59,6 @@ export default function GithubProjects({
   const filtered = useMemo(() => {
     if (!data) return [];
     const base = data
-      // mostramos todo, sin filtros de forks/withDemo
       .filter((r) =>
         q.trim()
           ? (r.name + " " + (r.description ?? "") + " " + (r.language ?? ""))
@@ -83,6 +86,10 @@ export default function GithubProjects({
     );
   }
 
+  const gridCls =
+    gridClassName ??
+    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch";
+
   return (
     <div>
       {!hideControls && (
@@ -96,8 +103,7 @@ export default function GithubProjects({
         </div>
       )}
 
-      {/* Grid uniforme; las cards se estiran a la misma altura */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-stretch">
+      <div className={gridCls}>
         {filtered.map((r, i) => {
           const p = {
             id: r.name,
@@ -110,7 +116,7 @@ export default function GithubProjects({
           };
           return (
             <Reveal key={r.name} delay={i * 0.03}>
-              <ProjectCard p={p as any} />
+              <ProjectCard p={p as any} variant={cardVariant} />
             </Reveal>
           );
         })}
