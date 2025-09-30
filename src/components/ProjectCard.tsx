@@ -111,7 +111,7 @@ export default function ProjectCard({ p, variant = "normal" }: { p: Project; var
                   {demoHref && (
                     <a href={demoHref} target="_blank" rel="noreferrer">
                       <Button className="gap-2 text-sm">
-                        <ExternalLink size={16} /> Visitar
+                        <ExternalLink size={16} /> Demo
                       </Button>
                     </a>
                   )}
