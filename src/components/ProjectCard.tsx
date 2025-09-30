@@ -14,7 +14,7 @@ function coverFromRepo(repoUrl?: string) {
   if (!repoUrl) return null;
   try {
     const u = new URL(repoUrl);
-    const parts = u.pathname.split("/").filter(Boolean); // ["DevIan28","repo"]
+    const parts = u.pathname.split("/").filter(Boolean);
     if (parts.length >= 2) {
       const [owner, repo] = parts;
       return `https://opengraph.githubassets.com/1/${owner}/${repo}`;
@@ -30,31 +30,16 @@ function coverOf(p: Project) {
   return `https://picsum.photos/seed/${encodeURIComponent(p.id)}-cover/1200/800`;
 }
 
-// GH Pages solo para ciertos repos tuyos
-function pagesUrlIfAny(repoUrl?: string) {
-  if (!repoUrl) return null;
-  try {
-    const u = new URL(repoUrl);
-    const owner = u.pathname.split("/").filter(Boolean)[0]?.toLowerCase();
-    const repo = u.pathname.split("/").filter(Boolean)[1];
-    const allow = new Set(["delicias-web", "Nintendo_Games_Catalog", "portafolio-ian"].map(s => s.toLowerCase()));
-    if (owner === "devian28" && repo && allow.has(repo.toLowerCase())) {
-      return `https://devian28.github.io/${repo}/`;
-    }
-  } catch {}
-  return null;
-}
-
 export default function ProjectCard({ p, variant = "normal" }: { p: Project; variant?: Variant }) {
   const [open, setOpen] = useState(false);
   const cover = coverOf(p);
-  const pagesUrl = pagesUrlIfAny(p.repo);
 
-  // Altura controlada: en "wide" (Home) bajamos la altura para que no se vean largas
+  // valores que pueden venir desde GithubProjects
+  const pagesUrl = (p as any).pages as string | undefined;
+  const demoHref = p.demo;
+
   const heightCls =
-    variant === "wide"
-      ? "h-[400px] md:h-[420px]"
-      : "h-[460px] md:h-[500px]";
+    variant === "wide" ? "h-[400px] md:h-[420px]" : "h-[460px] md:h-[500px]";
 
   return (
     <>
@@ -65,11 +50,9 @@ export default function ProjectCard({ p, variant = "normal" }: { p: Project; var
                         ${heightCls} flex flex-col w-full
                         border border-neutral-200 dark:border-neutral-800 bg-white/90 dark:bg-neutral-900/85`}
           >
-            {/* Resplandor suave al hover */}
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/0 via-brand-500/0 to-brand-500/0 group-hover:from-brand-500/10 group-hover:via-transparent group-hover:to-fuchsia-500/10 transition-opacity duration-300" />
 
             <CardContent className="p-0 flex-1 flex flex-col">
-              {/* Media con relación fija (igual altura visual) */}
               <div className="aspect-[16/9] w-full overflow-hidden">
                 <img
                   src={cover}
@@ -111,7 +94,7 @@ export default function ProjectCard({ p, variant = "normal" }: { p: Project; var
                     WebkitLineClamp: 3,
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
-                    minHeight: "2.9rem", // ~3 líneas
+                    minHeight: "2.9rem",
                   }}
                   title={p.description}
                 >
@@ -119,22 +102,21 @@ export default function ProjectCard({ p, variant = "normal" }: { p: Project; var
                 </p>
 
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {p.tags.slice(0, 4).map((t) => (
+                  {p.tags?.slice(0, 4).map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </div>
 
-                {/* Footer abajo: Demo / Pages / Repo */}
                 <div className="mt-auto pt-4 flex flex-wrap gap-2">
-                  {p.demo && (
-                    <a href={p.demo} target="_blank" rel="noreferrer">
+                  {demoHref && (
+                    <a href={demoHref} target="_blank" rel="noreferrer">
                       <Button className="gap-2 text-sm">
                         <ExternalLink size={16} /> Visitar
                       </Button>
                     </a>
                   )}
 
-                  {pagesUrl && (
+                  {pagesUrl && (!demoHref || demoHref !== pagesUrl) && (
                     <a href={pagesUrl} target="_blank" rel="noreferrer">
                       <Button variant="secondary" className="gap-2 text-sm">
                         <ExternalLink size={16} /> Pages

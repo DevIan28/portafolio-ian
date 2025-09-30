@@ -11,6 +11,7 @@ type GHRepo = {
   language: string | null;
   fork: boolean;
   pushed_at: string;
+  has_pages: boolean; // 👈 usamos esto
 };
 
 function ogCover(username: string, repo: string) {
@@ -107,9 +108,19 @@ export default function GithubProjects({
       <div className={gridCls}>
         {filtered.map((r, i) => {
           const repoName = r.name;
-          const imgs = screens[repoName] && screens[repoName].length > 0
-            ? screens[repoName]
-            : [ogCover(username, repoName)]; // fallback
+
+          // Portadas/carrusel: primero tus capturas locales, si no OG del repo
+          const imgs =
+            screens[repoName] && screens[repoName].length > 0
+              ? screens[repoName]
+              : [ogCover(username, repoName)];
+
+          // Si el repo tiene Pages, forzamos esa URL como demo preferida
+          const pagesUrl = r.has_pages
+            ? `https://${username.toLowerCase()}.github.io/${repoName}/`
+            : undefined;
+
+          const demoUrl = pagesUrl ?? (r.homepage ? r.homepage : undefined);
 
           const p = {
             id: repoName,
@@ -117,8 +128,9 @@ export default function GithubProjects({
             description: r.description ?? "Proyecto en GitHub",
             tags: [r.language ?? "GitHub"].filter(Boolean),
             repo: r.html_url,
-            demo: r.homepage ?? undefined,
-            images: imgs, // 👈 se envían al card y al modal
+            demo: demoUrl,            // 👈 DEMO preferirá GH Pages si existe
+            images: imgs,
+            pages: pagesUrl,          // 👈 Enviamos pages explícito para el botón
           };
 
           return (

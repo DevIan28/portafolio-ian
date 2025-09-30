@@ -13,28 +13,11 @@ type Props = {
   p: Project;
 };
 
-// Detecta si el repo tiene sitio en GitHub Pages y construye la URL
-function pagesUrlIfAny(repoUrl?: string) {
-  if (!repoUrl) return null;
-  try {
-    const u = new URL(repoUrl);
-    const owner = u.pathname.split("/").filter(Boolean)[0]?.toLowerCase();
-    const repo = u.pathname.split("/").filter(Boolean)[1];
-    // Repos con Pages publicados (ajusta aquí si agregas más)
-    const allow = new Set(["delicias-web", "Nintendo_Games_Catalog", "portafolio-ian"].map(s => s.toLowerCase()));
-    if (owner === "devian28" && repo && allow.has(repo.toLowerCase())) {
-      return `https://devian28.github.io/${repo}/`;
-    }
-  } catch {
-    /* no-op */
-  }
-  return null;
-}
-
 export default function ProjectModal({ open, onClose, p }: Props) {
   useLockBodyScroll(open);
 
-  const pagesUrl = pagesUrlIfAny(p.repo);
+  const pagesUrl = (p as any).pages as string | undefined; // 👈 viene desde GithubProjects
+  const demoHref = p.demo;
 
   return createPortal(
     <AnimatePresence>
@@ -82,27 +65,29 @@ export default function ProjectModal({ open, onClose, p }: Props) {
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {p.tags.map((t) => (
+                  {p.tags?.map((t) => (
                     <Badge key={t}>{t}</Badge>
                   ))}
                 </div>
 
                 {/* Acciones: Demo, Pages (si aplica) y Repo */}
                 <div className="mt-6 flex flex-wrap gap-2">
-                  {p.demo && (
-                    <a href={p.demo} target="_blank" rel="noreferrer">
+                  {demoHref && (
+                    <a href={demoHref} target="_blank" rel="noreferrer">
                       <Button className="gap-2">
                         <ExternalLink size={16} /> Demo
                       </Button>
                     </a>
                   )}
-                  {pagesUrl && (
+
+                  {pagesUrl && (!demoHref || demoHref !== pagesUrl) && (
                     <a href={pagesUrl} target="_blank" rel="noreferrer">
                       <Button variant="secondary" className="gap-2">
                         <ExternalLink size={16} /> Pages
                       </Button>
                     </a>
                   )}
+
                   {p.repo && (
                     <a href={p.repo} target="_blank" rel="noreferrer">
                       <Button variant="ghost" className="gap-2">
